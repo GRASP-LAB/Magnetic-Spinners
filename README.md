@@ -16,7 +16,7 @@ This repository supports broader accessibility to experimental frustrated system
 
 
 ### DOI for the repository
-<a href="https://doi.org/10.5281/zenodo.15205889"><img src="https://zenodo.org/badge/706317332.svg" alt="DOI"></a>
+<a href="https://doi.org/10.5281/zenodo.15470824"><img src="https://zenodo.org/badge/978573378.svg" alt="DOI"></a>
 
 
 ### Correspondance 
