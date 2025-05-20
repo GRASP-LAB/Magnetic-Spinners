@@ -7,4 +7,5 @@ Included in the repository are:
 
 - STL files and design templates for 3D printing spinner components and lattice holders.
 - Code for simulation and analysis of spinner configurations.
+
 This repository supports broader accessibility to experimental frustrated systems and encourages interdisciplinary engagement in areas such as condensed matter physics, mechanical computing, and emergent complexity.
