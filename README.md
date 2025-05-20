@@ -20,4 +20,5 @@ This repository supports broader accessibility to experimental frustrated system
 
 
 ### Correspondance 
-Megan Delens : axel.franckart@uliege.be
+Adrien Wafflard : adrien.wafflard@uliege.be
+Axel Franckart  : axel.franckart@uliege.be
