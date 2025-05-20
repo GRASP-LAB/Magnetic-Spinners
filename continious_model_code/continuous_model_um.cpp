@@ -32,7 +32,7 @@ t_spinner_grid* generate_state( int nx, int ny, double L, unsigned int* seed) {
     t_spinner_grid* grid = (t_spinner_grid*)malloc(sizeof(t_spinner_grid) * 128 * 10);
     for(int i = 0; i < 10; i++){
         for(int l = 0; l < 128; l++){
-            init_grid(&grid[i * 128 + l], nx, ny, L);//printf("%d\n", i * 128 + l);
+            init_grid(&grid[i * 128 + l], nx, ny, L);
             for(int j = 0; j < nx * ny; j++) {
                 grid[i * 128 + l].spin[j].theta = gridfirst[i].spin[j].theta; 
             }

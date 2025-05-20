@@ -11,9 +11,9 @@
 
 
 double normalize_angle(double angle) {
-    angle = fmod(angle, 2 * M_PI);  // Réduit l'angle dans la plage [-2π, 2π]
+    angle = fmod(angle, 2 * M_PI); 
     if (angle < 0) {
-        angle += 2 * M_PI;  // Assure que l'angle est positif
+        angle += 2 * M_PI;  
     }
     return angle;
 }
@@ -50,16 +50,16 @@ void init_grid(t_spinner_grid* grid, int nx, int ny, double L){
             grid->spin[index].omega = 0;
             grid->spin[index].theta_stat = 0;
 
-            // droite, au dessus � droite, au dessus � gauche, gauche, en dessous � gauche, en dessous � droite
+            // 0 right, 1 top right, 2 top left, 3 left, 4 bottom left, 5 bottom right
             
              if (i != 0) {
-                grid->spin[index].neigbour[3] = j * grid->nx + i - 1; // voisin de gauche
+                grid->spin[index].neigbour[3] = j * grid->nx + i - 1; 
             }
 	        else { grid->spin[index].neigbour[3]  = - 1; }
 
-            if (j != 0)     //peut avoir des voisins au dessus
+            if (j != 0)     
             {
-                if (j % 2 == 1)     //peut avoir un voisin au dessu � gauche
+                if (j % 2 == 1)     
                 {
                     grid->spin[index].neigbour[2] = (j - 1) * grid->nx + i;
                 }
@@ -70,7 +70,7 @@ void init_grid(t_spinner_grid* grid, int nx, int ny, double L){
 		    	    grid->spin[index].neigbour[2] = -1;
 		        }
 
-                if (j % 2 == 0)     //peut avoir un voisin au dessu � droite
+                if (j % 2 == 0)     
                 {
                     grid->spin[index].neigbour[1] = (j - 1) * grid->nx + i;
                 }
@@ -85,13 +85,13 @@ void init_grid(t_spinner_grid* grid, int nx, int ny, double L){
 	        }
 
             if (i != grid->nx - 1) {
-                grid->spin[index].neigbour[0] = j * grid->nx + i + 1;    //voisin de droite
+                grid->spin[index].neigbour[0] = j * grid->nx + i + 1;    
 	        }
 	        else { grid->spin[index].neigbour[0] = -1; }
 
-            if (j != grid->ny - 1)     //peut avoir des voisins en dessous
+            if (j != grid->ny - 1)     
             {
-                if (j % 2 == 1)     //peut avoir un voisin en dessous � gauche
+                if (j % 2 == 1)     
                 {
 			        grid->spin[index].neigbour[4] = (j + 1) * grid->nx + i; 
                 }
@@ -100,7 +100,7 @@ void init_grid(t_spinner_grid* grid, int nx, int ny, double L){
 		        }
 		        else { grid->spin[index].neigbour[4] = -1; }
 
-                if (j % 2 == 0)     //peut avoir un voisin en dessous � droite
+                if (j % 2 == 0)    
                 {
                     grid->spin[index].neigbour[5] = (j + 1) * grid->nx + i;
                 }
@@ -108,7 +108,7 @@ void init_grid(t_spinner_grid* grid, int nx, int ny, double L){
                     grid->spin[index].neigbour[5] = (j + 1) * grid->nx + i + 1;
 		        }
 		        else { grid->spin[index].neigbour[5] = -1; }
-	        } else {// droite, au dessus � droite, au dessus � gauche, gauche, en dessous � gauche, en dessous � droite
+	        } else {
 		        grid->spin[index].neigbour[4] = -1;
 		        grid->spin[index].neigbour[5] = -1;
 	        }       
@@ -133,7 +133,6 @@ void init_rand(t_spinner_grid* grid, unsigned int* seed){
         grid->spin[i].theta = (double)rand_r(seed) / (double)RAND_MAX * 2. * M_PI;
         grid->spin[i].theta_stat = grid->spin[i].theta;
     }
-    //for(int i = 0; i < grid->Nspin; i++) grid->spin[i].theta = 0;
 }
 
 void print_spinner(t_spinner_grid* grid) {
@@ -176,7 +175,6 @@ double V_local(t_spinner_grid* grid, int index) {
 
                     Vtot += Vinter * grid->spin[index].moments[k] * grid->spin[j].moments[l];
 
-                    //printf("%d %d %f %f %d %d %f %f %f a %f %f %f %f t %f %f\n", index, j, Vtot / HREF, Vinter /HREF, k, l, Lijkl, dxkl, dykl, m1_x, m1_y, m2_x, m2_y, grid->spin[j].theta, grid->spin[index].theta);
                 }
             }
         }
@@ -301,7 +299,6 @@ void annealing(t_spinner_grid* grid, double T0, double Tf, double lambda, int ni
                 double old_V = V_local(grid, i);  // Old energy
           
                 grid->spin[i].theta += 2. * ((rand_r(seed) / (double)RAND_MAX) - 0.5) * M_PI / 180.0 * 5.;  // Small random angle change
-                //grid->spin[i].theta += (rand_r(seed) % 2) ? -0.5 : 0.5;  // Small random angle change
 
                 double new_V = V_local(grid, i);  // New energy
 
@@ -315,11 +312,10 @@ void annealing(t_spinner_grid* grid, double T0, double Tf, double lambda, int ni
 
                 }
             
-        } //printf("%f %f %f %f %f\n",V(grid), V_local(grid, 0), V_local(grid, 1),V_local(grid, 2), V_local(grid, 3));
+        } 
     }
 
     for(int j = 0; j < grid->Nspin; j++) grid->spin[j].theta = normalize_angle(grid->spin[j].theta );
-    //printf("%f %f\n" , normalize_angle( grid->spin[0].theta), normalize_angle(grid->spin[1].theta));
 }
 
 
@@ -330,14 +326,11 @@ void steepest_descent(t_spinner_grid* grid, double delta_theta, double alpha, in
 
     for(int i = 0; i < grid->Nspin; i++) u[i] = 1;
     double beta = 0.0;
-    //alpha = 5;
 
 
     for(int i = 0; i < max_iter; i++)
     {   
         bool stop = true;
-
-        //printf("%f %f\n" , normalize_angle( grid->spin[0].theta), normalize_angle(grid->spin[1].theta));
         
         dV(grid, grad, delta_theta);
         for(int j = 0; j < grid->Nspin; j++){
@@ -349,7 +342,7 @@ void steepest_descent(t_spinner_grid* grid, double delta_theta, double alpha, in
         }
         
         if (stop){
-            //printf("break\n");
+            
             break;
         }
     }
@@ -377,7 +370,7 @@ double* n_meta(int nx, int ny, double L, int n_iterations, double delta_theta, d
     for(int i = 0; i < n_iterations; i++){
         init_grid(&grid[i], nx, ny, L);
         init_rand(&grid[i], &seed);
-        //steepest_descent(&grid[i], delta_theta, alpha, max_iter, tolerance);
+        
         annealing(&grid[i], 1, 0.001, 0.5, 1000, &seed);
         equal[i] = false;
     }
@@ -429,7 +422,7 @@ double combine_std(double*  means, double* std_devs, int* sizes, int world_rank)
     for (int i = 0; i < world_rank; i++) std += (sizes[i] - 1) * 
                     (std_devs[i] * std_devs[i] + means[i] * means[i]);
 
-    // Retourner l'écart type combiné (racine carrée de la variance combinée)
+    
     return std::sqrt(std  / (size - 1) - mean * mean);
 }
 
@@ -437,18 +430,18 @@ double combine_std(double*  means, double* std_devs, int* sizes, int world_rank)
 
 void n_meta_fct_inter(int nx, int ny, double L, int n_iterations, double delta_theta, double alpha, int max_iter, double tolerance) {
 
-    // Déclarer le nombre de processus et leur rang dans MPI
+    
     int rank, size;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &size);
 
     unsigned int seed = time(NULL) + rank;
 
-    // Répartir le travail entre les processus MPI
+    
     int iterations_per_process = n_iterations / size;
     if (0 != n_iterations % size && rank == size - 1) iterations_per_process += n_iterations % size;
 
-    // Variables pour stocker les résultats de chaque processus
+    
     double energy = 0;
     double energy_std = 0;
     int* alln = (int*)calloc(size, sizeof(int));
@@ -459,8 +452,8 @@ void n_meta_fct_inter(int nx, int ny, double L, int n_iterations, double delta_t
     MPI_Gather(&n, 1, MPI_INT, alln, 1, MPI_INT, 0, MPI_COMM_WORLD);
     for(int i = 0 ; i < size; i++) n_total += alln[i];
 
-    int* recvcounts = (int*)malloc(sizeof(int) * size);  // Le nombre d'éléments que chaque processus envoie
-    int* displs = (int*)calloc(size, sizeof(int));       // Le décalage des éléments dans allspin
+    int* recvcounts = (int*)malloc(sizeof(int) * size);  
+    int* displs = (int*)calloc(size, sizeof(int));       
 
     for(int i = 0; i < size; i++) recvcounts[i] = alln[i] * nx * ny;  
     for(int i = 1; i < size; i++) displs[i] = displs[i - 1] + recvcounts[i - 1];  
@@ -491,8 +484,8 @@ void n_meta_fct_inter(int nx, int ny, double L, int n_iterations, double delta_t
 
         for(int i = 0; i < n_total; i++){
             if(!equal[i]){
-                energy += V(&grid[i]); //printf("%f\t%f\n", grid[i].spin[0].theta, grid[i].spin[1].theta);
-                n_diff++; //printf("%f\n", V(&grid[i]));
+                energy += V(&grid[i]); 
+                n_diff++; 
             }
         }
 
@@ -512,7 +505,7 @@ void n_meta_fct_inter(int nx, int ny, double L, int n_iterations, double delta_t
         free(grid);
     }
 
-    // Synchroniser les processus MPI avant de finir
+    
     MPI_Barrier(MPI_COMM_WORLD);
 
 }

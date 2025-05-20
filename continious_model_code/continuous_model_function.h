@@ -18,10 +18,25 @@
 #define M_PI 3.14159265358979323846
 
 #define MU0 0.0000012566370614 //[SI]
-#define HREF 0.0497552 // interaction d-d pour m = 1  et L =0.0319 dans le cas ou l'interaction est max [SI] avec le mu_o/4Pi pour mu=1
-#define R 0.008  //distance entre le centre du dipo  le et le centre du spinner [m]
+#define HREF 0.0497552 // d-d interaction for m = 1 and L = 0.0319 in the case where the interaction is maximal [SI] with mu_0/4Pi for mu = 1
+#define R 0.008  // distance between the center of the dipole and the center of the spinner [m]
+
 
 #define NUMBER_ARM 3
+
+/**
+ * @file continuous_model_function.h
+ * @brief Functions and structures for simulating and analyzing spinner systems using continuous models.
+ *
+ * This header includes:
+ * - Definitions for spinner and spinner grid structures
+ * - Grid generation and initialization routines
+ * - Energy calculations and gradient descent methods
+ * - Simulated annealing for local minima exploration
+ * - Stability analysis of spinner configurations
+ * - Discretization error estimation between continuous and discrete models
+ * - Parallel computing support with MPI and OpenMP
+ */
 
 /**
  * @brief structure for the spinner
@@ -32,9 +47,9 @@ typedef struct spinner {
     double moments[3] = {1., 1., -1.};
     int neigbour[6];
     double theta; // radian
-    double omega;
+    double omega; // angular velocity
 
-    double theta_stat; // pour la friction statique
+    double theta_stat; // friction
 
 } t_spinner;
 

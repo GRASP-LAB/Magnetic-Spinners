@@ -2,7 +2,6 @@
 #include <mpi.h>
 #include <omp.h>
 #include "continuous_model_function.h"
-#include "continuous_model_physics.h"
 #include <ctime>
 #include <cmath>
 #include <stdlib.h>
